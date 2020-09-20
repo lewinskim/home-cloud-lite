@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.nio.file.Path;
-import java.util.stream.Stream;
+import java.util.List;
 
 @RestController
 public class FileCloudController {
@@ -20,7 +19,7 @@ public class FileCloudController {
     }
 
     @GetMapping("/files")
-    public Stream<Path> allFiles() {
+    public List<String> allFiles() {
         return fileService.loadHomeDirectoryFiles();
     }
 

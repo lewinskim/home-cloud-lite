@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 class FileService {
@@ -21,11 +22,12 @@ class FileService {
         init();
     }
 
-    public Stream<Path> loadHomeDirectoryFiles() {
+    public List<String> loadHomeDirectoryFiles() {
         try {
             return Files.walk(rootAppDirectory, 1)
-                    .filter(filename -> !filename.equals(rootAppDirectory))
-                    .map(rootAppDirectory::relativize);
+                    .map(path -> path.getFileName().toString())
+                    .filter(filename -> !filename.equals(APP_ROOT_DIRECTORY_NAME))
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             throw new IllegalStateException("Could not load files ", e);
         }
